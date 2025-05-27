@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=CPU Affinity Manager
+Comment=Manage CPU affinity for processes
+Exec=python3 /home/corey/Documents/Scripts/affinity_gui/main.py
+Icon=preferences-system-performance
+Terminal=false
+Type=Application
+Categories=System;Settings;
+StartupNotify=true 
