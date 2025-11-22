@@ -1,10 +1,9 @@
 import json
-import os
 from pathlib import Path
 
 class SettingsManager:
     def __init__(self):
-        self.config_dir = Path.home() / '.config' / 'affinity-gui'
+        self.config_dir = Path.home() / '.config' / 'cpu-affinity-manager'
         self.settings_file = self.config_dir / 'process_settings.json'
         self.settings = self._load_settings()
 

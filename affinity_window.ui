@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="adw" version="1.0"/>
+  <menu id="primary_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Enable Auto-Apply Service</attribute>
+        <attribute name="action">win.enable_service</attribute>
+        <attribute name="icon">media-playback-start-symbolic</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Disable Auto-Apply Service</attribute>
+        <attribute name="action">win.disable_service</attribute>
+        <attribute name="icon">media-playback-stop-symbolic</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Open Settings Folder</attribute>
+        <attribute name="action">win.open_settings_folder</attribute>
+        <attribute name="icon">folder-open-symbolic</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">About CPU Affinity Manager</attribute>
+        <attribute name="action">win.about</attribute>
+      </item>
+    </section>
+  </menu>
+  <template class="CPUAffinityManagerWindow" parent="AdwApplicationWindow">
+    <property name="title" translatable="yes">CPU Affinity Manager</property>
+    <property name="default-width">800</property>
+    <property name="default-height">700</property>
+    <property name="content">
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="spacing">12</property>
+        <child>
+          <object class="AdwHeaderBar">
+            <child type="end">
+              <object class="GtkMenuButton" id="primary_menu_button">
+                <property name="icon-name">open-menu-symbolic</property>
+                <property name="menu-model">primary_menu</property>
+                <property name="primary">True</property>
+                <property name="tooltip-text" translatable="yes">Main Menu</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow">
+            <property name="vexpand">True</property>
+            <property name="hscrollbar-policy">never</property>
+            <child>
+              <object class="GtkBox">
+                <property name="orientation">vertical</property>
+                <property name="spacing">12</property>
+                <property name="margin-start">24</property>
+                <property name="margin-end">24</property>
+                <property name="margin-top">24</property>
+                <property name="margin-bottom">24</property>
+                
+                <!-- Process Name Section -->
+                <child>
+                  <object class="GtkBox">
+                    <property name="orientation">horizontal</property>
+                    <property name="spacing">12</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label" translatable="yes">Process Name:</property>
+                        <property name="halign">start</property>
+                        <property name="width-request">120</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="process_entry">
+                        <property name="placeholder-text" translatable="yes">Enter process name</property>
+                        <property name="hexpand">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="search_button">
+                        <property name="icon-name">system-search-symbolic</property>
+                        <property name="tooltip-text" translatable="yes">Search for process</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuButton" id="settings_menu_button">
+                        <property name="icon-name">view-list-symbolic</property>
+                        <property name="tooltip-text" translatable="yes">Manage Saved Settings</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
+                <!-- CPU Mask Section -->
+                <child>
+                  <object class="GtkBox">
+                    <property name="orientation">horizontal</property>
+                    <property name="spacing">12</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label" translatable="yes">CPU Mask:</property>
+                        <property name="halign">start</property>
+                        <property name="width-request">120</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox" id="mask_container">
+                        <property name="orientation">horizontal</property>
+                        <property name="spacing">0</property>
+                        <property name="hexpand">True</property>
+                        <child>
+                          <object class="GtkDropDown" id="mask_dropdown">
+                            <property name="hexpand">True</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="custom_mask_entry">
+                            <property name="placeholder-text" translatable="yes">Enter custom CPU mask (e.g., 0x00FF00FF)</property>
+                            <property name="visible">False</property>
+                            <property name="hexpand">True</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="info_button">
+                        <property name="icon-name">help-about-symbolic</property>
+                        <property name="tooltip-text" translatable="yes">Show CPU mask help</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
+                <!-- Initial Delay Section -->
+                <child>
+                  <object class="GtkBox">
+                    <property name="orientation">horizontal</property>
+                    <property name="spacing">12</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label" translatable="yes">Initial Delay (seconds):</property>
+                        <property name="halign">start</property>
+                        <property name="width-request">120</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSpinButton" id="delay_spin">
+                        <property name="adjustment">
+                          <object class="GtkAdjustment">
+                            <property name="lower">0</property>
+                            <property name="upper">300</property>
+                            <property name="step-increment">1</property>
+                            <property name="value">20</property>
+                          </object>
+                        </property>
+                        <property name="hexpand">True</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSeparator">
+                    <property name="margin-top">12</property>
+                    <property name="margin-bottom">12</property>
+                  </object>
+                </child>
+
+                <!-- Preview Section -->
+                <child>
+                  <object class="GtkFrame">
+                    <property name="label" translatable="yes">Preview</property>
+                    <property name="margin-top">12</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">12</property>
+                        <property name="margin-start">12</property>
+                        <property name="margin-end">12</property>
+                        <property name="margin-top">12</property>
+                        <property name="margin-bottom">12</property>
+                        <child>
+                          <object class="GtkScrolledWindow">
+                             <property name="hscrollbar-policy">never</property>
+                             <property name="vscrollbar-policy">automatic</property>
+                             <property name="height-request">150</property>
+                            <child>
+                              <object class="GtkLabel" id="preview_label">
+                                <property name="wrap">True</property>
+                                <property name="halign">start</property>
+                                <property name="valign">start</property>
+                                <property name="label" translatable="yes">&lt;span style='italic'&gt;Enter a process name to see what will be changed&lt;/span&gt;</property>
+                                <property name="use-markup">True</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
+                <!-- Status Label -->
+                <child>
+                  <object class="GtkLabel" id="status_label">
+                    <property name="wrap">True</property>
+                    <property name="label" translatable="yes">&lt;span weight='bold'&gt;Ready to set CPU affinity&lt;/span&gt;</property>
+                    <property name="use-markup">True</property>
+                  </object>
+                </child>
+
+                <!-- Action Buttons -->
+                <child>
+                  <object class="GtkBox">
+                    <property name="orientation">horizontal</property>
+                    <property name="spacing">12</property>
+                    <property name="halign">end</property>
+                    <child>
+                      <object class="GtkButton" id="save_button">
+                        <property name="label" translatable="yes">Save Settings</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="apply_button">
+                        <property name="label" translatable="yes">Apply CPU Affinity</property>
+                        <property name="css-classes">suggested-action</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+  </template>
+</interface>

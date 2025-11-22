@@ -134,6 +134,5 @@ dehklp.txt
 *.ui~
 *.glade~
 
-# Settings files (if they are user-specific and not meant to be in repo)
-# Might want to uncomment if process_settings.json should not be versioned:
+# Settings files
 .config/affinity-gui/process_settings.json 
