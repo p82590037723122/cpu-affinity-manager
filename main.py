@@ -479,6 +479,7 @@ ExecStart=/usr/bin/python3 {auto_apply_script}
 WorkingDirectory={base_dir}
 StandardOutput=null
 StandardError=journal
+LogLevelMax=notice
 """
             # Create timer file content
             timer_content = """[Unit]
